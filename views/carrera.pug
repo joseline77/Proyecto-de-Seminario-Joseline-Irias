@@ -1,0 +1,41 @@
+
+extends base.pug
+
+block head
+
+block container
+    if carreras
+        .container.mt-1    
+            h1.text-center Carrera        
+            .row
+                .col-xs-6.col-sm-6
+                    h1 Registrar Carrera Estudiantil
+                    form(action="/carreras", method="post")
+                        input#NombreCarrera.form-control.mt-3(type="text" name="nombre" placeholder="Nombre de la carrera")
+                        input#Descripcion.form-control.mt-3(type="text" name="descripcion" placeholder="Descripcion de la carrera")
+                        input.btn.btn-primary.mt-3(type="submit" value="Registrar")
+                        
+                
+                .col-xs-6.col-sm-6.text-center
+                    table.table.table-dark
+                        thead
+                            tr
+                                th id
+                                th Nombre Carrera
+                                th Descripcion
+                                th acciones
+                        tbody
+                            if carreras
+                                each carrera in carreras
+                                    tr
+                                        td #{carrera.IdCarrera}
+                                        td #{carrera.NombreCarrera}
+                                        td #{carrera.Descripcion}
+                                        td
+                                            button.btn.btn-primary Actualizar
+                                            form(action="/carreras/delete/"+carrera.IdCarrera, method="post") 
+                                                button.btn.btn-danger Eliminar
+                            else
+                                tr
+                                    td(colspan="4").text-center
+                                        h1 No hay carreras registradas                                         

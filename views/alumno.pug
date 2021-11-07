@@ -1,0 +1,57 @@
+extends base.pug
+
+block head
+
+block container
+    .container.mt-1    
+        h1.text-center Alumno        
+        .row
+            .col-xs-4.col-sm-4
+                h1 Registrar Alumno
+                form(action="/alumnos" method="post").form-group.mt-3
+                    label(for="Nombre") Nombre
+                    input#Nombre.form-control(type="text" required name="nombre")
+                    label(for="Apellido") Apellido
+                    input#Apellido.form-control(type="text" required name="apellido")
+                    label(for="Telefono") Telefono
+                    input#Telefono.form-control(type="text" required name="telefono")
+                    label(for="idcarrera") Carrera
+                    select#IdCarera.form-control(name="idcarrera" required)
+                        option(value="") Seleccione una carrera
+                        each carrera in carreras
+                            option(value=carrera.IdCarrera) #{carrera.NombreCarrera}
+                    label(for="Estado") Estado
+                    select#Estado.form-control(name="estado")
+                        option(value="1") Activo
+                        option(value="0") Inactivo
+                    button(type="submit").btn.btn-primary.mt-3 Registrar
+            
+            .col-xs-8.col-sm-8.text-center
+                table.table.table-dark
+                    thead
+                        tr
+                            th id
+                            th Nombre
+                            th Apellido
+                            th Telefono
+                            th Carrera
+                            th Estado 
+                            th acciones
+                    tbody
+                            if alumnos
+                                each alumno in alumnos
+                                    tr
+                                        th #{alumno.IdAlumno}
+                                        th #{alumno.Nombre}
+                                        td #{alumno.Apellido}
+                                        td #{alumno.Telefono}
+                                        td #{alumno.Estado}
+                                        td #{alumno.IdCarrera}
+                                        td
+                                            button.btn.btn-primary Actualizar
+                                            form(action="/alumnos/delete/"+alumno.IdAlumno, method="post") 
+                                                button.btn.btn-danger Eliminar
+                            else
+                                tr
+                                    td(colspan="7").text-center.text-muted.font-weight-bold
+                                        | No hay alumnos registrados
